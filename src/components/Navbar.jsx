@@ -12,14 +12,17 @@ const Navbar = () => {
         </Box>
         <Spacer />
         <Box>
-          <Button as={RouterLink} to="/profile" colorScheme="teal" variant="outline" mr={4}>
-            Profile
+          <Button as={RouterLink} to="/projects" colorScheme="teal" variant="outline" mr={4}>
+            Projects
           </Button>
-          <Button as={RouterLink} to="/about" colorScheme="teal" variant="outline" mr={4}>
-            About
+          <Button as={RouterLink} to="/tasks" colorScheme="teal" variant="outline" mr={4}>
+            Tasks
           </Button>
-          <Button as={RouterLink} to="/contact" colorScheme="teal" variant="outline">
-            Contact
+          <Button as={RouterLink} to="/editing" colorScheme="teal" variant="outline" mr={4}>
+            Editing
+          </Button>
+          <Button as={RouterLink} to="/forums" colorScheme="teal" variant="outline">
+            Forums
           </Button>
         </Box>
       </Flex>
