@@ -1,4 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { useState } from "react";
+import Notification from "./components/Notification.jsx";
 import Index from "./pages/Index.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
@@ -11,9 +13,14 @@ import DiscussionForums from "./pages/DiscussionForums.jsx";
 import KnowledgePortals from "./pages/KnowledgePortals.jsx";
 
 function App() {
+  const [notifications, setNotifications] = useState([
+    { message: "Welcome to the platform!", type: "info" },
+    { message: "You have a new message.", type: "success" },
+  ]);
   return (
     <Router>
       <Navbar />
+      <Notification notifications={notifications} />
       <Routes>
         <Route exact path="/" element={<Index />} />
         <Route exact path="/about" element={<About />} />
