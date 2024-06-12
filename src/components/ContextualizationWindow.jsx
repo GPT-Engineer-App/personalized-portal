@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Heading, Text, VStack, Tag, TagLabel, Input, Button, HStack } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack, Tag, TagLabel, Input, Button, HStack, Slider, SliderTrack, SliderFilledTrack, SliderThumb } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 
 const ContextualizationWindow = ({ content }) => {
   const [recommendations, setRecommendations] = useState([]);
   const [trends, setTrends] = useState([]);
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
+  const [weights, setWeights] = useState({});
 
   useEffect(() => {
     const fetchRecommendationsAndTrends = async () => {
       try {
-        // Simulate API call to fetch recommendations and trends
         const fetchedRecommendations = await getRecommendations(content);
         const fetchedTrends = await getTrends(content);
         setRecommendations(fetchedRecommendations);
@@ -24,12 +24,10 @@ const ContextualizationWindow = ({ content }) => {
   }, [content]);
 
   const getRecommendations = async (content) => {
-    // Simulate API call to fetch recommendations based on content
     return ["Personalized Recommendation 1", "Personalized Recommendation 2"];
   };
 
   const getTrends = async (content) => {
-    // Simulate API call to fetch trends based on content
     return ["Personalized Trend 1", "Personalized Trend 2"];
   };
 
@@ -37,6 +35,19 @@ const ContextualizationWindow = ({ content }) => {
     if (newTag) {
       setTags([...tags, newTag]);
       setNewTag("");
+    }
+  };
+
+  const handleSliderChange = (tag, value) => {
+    setWeights({ ...weights, [tag]: value });
+    updateUserPreferences(tag, value);
+  };
+
+  const updateUserPreferences = async (tag, value) => {
+    try {
+      console.log(`Updated ${tag} weight to ${value}`);
+    } catch (error) {
+      console.error("Error updating user preferences:", error);
     }
   };
 
@@ -62,6 +73,18 @@ const ContextualizationWindow = ({ content }) => {
             {tags.map((tag, index) => (
               <Tag key={index} size="lg" colorScheme="teal">
                 <TagLabel>{tag}</TagLabel>
+                <Slider
+                  aria-label={`slider-${tag}`}
+                  defaultValue={weights[tag] || 0}
+                  min={0}
+                  max={100}
+                  onChange={(value) => handleSliderChange(tag, value)}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
               </Tag>
             ))}
           </HStack>
