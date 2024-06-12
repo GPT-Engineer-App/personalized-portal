@@ -8,17 +8,23 @@ const ContextualizationWindow = ({ content }) => {
   const [newTag, setNewTag] = useState("");
 
   useEffect(() => {
-    // Placeholder for fetching recommendations and trends based on content
     const fetchRecommendationsAndTrends = async () => {
-      // Simulate API call
-      const fetchedRecommendations = ["Recommendation 1", "Recommendation 2"];
-      const fetchedTrends = ["Trend 1", "Trend 2"];
+      const fetchedRecommendations = generateRecommendations(content);
+      const fetchedTrends = generateTrends(content);
       setRecommendations(fetchedRecommendations);
       setTrends(fetchedTrends);
     };
 
     fetchRecommendationsAndTrends();
   }, [content]);
+
+  const generateRecommendations = (content) => {
+    return ["Recommendation based on " + content, "Another recommendation based on " + content];
+  };
+
+  const generateTrends = (content) => {
+    return ["Trend based on " + content, "Another trend based on " + content];
+  };
 
   const addTag = () => {
     if (newTag) {
