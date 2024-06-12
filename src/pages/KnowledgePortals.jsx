@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Box, Heading, VStack, Input, Button, Textarea, HStack, Tag, TagLabel, Select, Text } from "@chakra-ui/react";
+import { Box, Heading, VStack, Input, Button, Textarea, HStack, Select, Text } from "@chakra-ui/react";
+import ContextualizationWindow from '../components/ContextualizationWindow';
 
 const KnowledgePortals = () => {
   const [content, setContent] = useState([]);
@@ -126,6 +127,7 @@ const KnowledgePortals = () => {
                   onBlur={(e) => addExpertReview(index, e.target.value)}
                 />
               </Box>
+              <ContextualizationWindow content={item.description} />
             </Box>
           ))}
         </Box>
