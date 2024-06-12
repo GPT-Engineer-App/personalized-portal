@@ -2,6 +2,49 @@ import { useState, useEffect } from "react";
 import { Box, Heading, Text, VStack, Avatar, Tag, TagLabel, Input, Button, HStack, SimpleGrid, Stat, StatLabel, StatNumber } from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
 
+const dummyProfiles = [
+  {
+    name: "David Lindh",
+    avatar: "https://via.placeholder.com/150",
+    skills: ["JavaScript", "React", "Node.js"],
+    projects: ["Project A", "Project B"],
+    recommendations: ["User1", "User2"],
+    collaborators: ["Collaborator1", "Collaborator2"],
+    projectRecommendations: ["Project1", "Project2"],
+    endorsements: ["Great developer!", "Excellent team player!"]
+  },
+  {
+    name: "Babila Fofuleng",
+    avatar: "https://via.placeholder.com/150",
+    skills: ["Python", "Django", "Machine Learning"],
+    projects: ["Project C", "Project D"],
+    recommendations: ["User3", "User4"],
+    collaborators: ["Collaborator3", "Collaborator4"],
+    projectRecommendations: ["Project3", "Project4"],
+    endorsements: ["Highly skilled!", "Innovative thinker!"]
+  },
+  {
+    name: "Shima Askari",
+    avatar: "https://via.placeholder.com/150",
+    skills: ["Java", "Spring", "Microservices"],
+    projects: ["Project E", "Project F"],
+    recommendations: ["User5", "User6"],
+    collaborators: ["Collaborator5", "Collaborator6"],
+    projectRecommendations: ["Project5", "Project6"],
+    endorsements: ["Detail-oriented!", "Great problem solver!"]
+  },
+  {
+    name: "Seham Murai",
+    avatar: "https://via.placeholder.com/150",
+    skills: ["C#", ".NET", "Azure"],
+    projects: ["Project G", "Project H"],
+    recommendations: ["User7", "User8"],
+    collaborators: ["Collaborator7", "Collaborator8"],
+    projectRecommendations: ["Project7", "Project8"],
+    endorsements: ["Excellent coder!", "Team leader!"]
+  }
+];
+
 const Profile = () => {
   const [avatar, setAvatar] = useState(null);
   const [skills, setSkills] = useState([]);
@@ -12,6 +55,7 @@ const Profile = () => {
   const [collaborators, setCollaborators] = useState([]);
   const [projectRecommendations, setProjectRecommendations] = useState([]);
   const [endorsements, setEndorsements] = useState([]);
+  const [selectedProfile, setSelectedProfile] = useState(dummyProfiles[0]);
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -49,20 +93,30 @@ const Profile = () => {
 
   useEffect(() => {
     try {
-      // Fetch recommendations, collaborators, and project recommendations based on user profile
-      // This is a placeholder for the actual matching algorithm
-      setRecommendations(["User1", "User2", "User3"]);
-      setCollaborators(["Collaborator1", "Collaborator2"]);
-      setProjectRecommendations(["Project1", "Project2"]);
+      console.log("Selected Profile:", selectedProfile);
+      setRecommendations(selectedProfile.recommendations);
+      setCollaborators(selectedProfile.collaborators);
+      setProjectRecommendations(selectedProfile.projectRecommendations);
+      setSkills(selectedProfile.skills);
+      setProjects(selectedProfile.projects);
+      setEndorsements(selectedProfile.endorsements);
+      setAvatar(selectedProfile.avatar);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }, [skills, projects]);
+  }, [selectedProfile]);
 
   return (
     <Box p={4}>
       <VStack spacing={4} align="stretch">
         <Heading>Profile</Heading>
+        <HStack spacing={4}>
+          {dummyProfiles.map((profile, index) => (
+            <Button key={index} onClick={() => setSelectedProfile(profile)}>
+              {profile.name}
+            </Button>
+          ))}
+        </HStack>
         <Box {...getRootProps()} border="2px dashed" p={4} textAlign="center">
           <input {...getInputProps()} />
           {avatar ? (
