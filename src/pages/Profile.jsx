@@ -19,6 +19,9 @@ const Profile = () => {
     reader.onload = () => {
       setAvatar(reader.result);
     };
+    reader.onerror = (error) => {
+      console.error("Error reading file:", error);
+    };
     reader.readAsDataURL(file);
   };
 
@@ -39,15 +42,21 @@ const Profile = () => {
   };
 
   const handleEndorsement = (endorsement) => {
-    setEndorsements([...endorsements, endorsement]);
+    if (endorsement) {
+      setEndorsements([...endorsements, endorsement]);
+    }
   };
 
   useEffect(() => {
-    // Fetch recommendations, collaborators, and project recommendations based on user profile
-    // This is a placeholder for the actual matching algorithm
-    setRecommendations(["User1", "User2", "User3"]);
-    setCollaborators(["Collaborator1", "Collaborator2"]);
-    setProjectRecommendations(["Project1", "Project2"]);
+    try {
+      // Fetch recommendations, collaborators, and project recommendations based on user profile
+      // This is a placeholder for the actual matching algorithm
+      setRecommendations(["User1", "User2", "User3"]);
+      setCollaborators(["Collaborator1", "Collaborator2"]);
+      setProjectRecommendations(["Project1", "Project2"]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }, [skills, projects]);
 
   return (
