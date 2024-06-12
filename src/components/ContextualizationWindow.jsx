@@ -8,17 +8,30 @@ const ContextualizationWindow = ({ content }) => {
   const [newTag, setNewTag] = useState("");
 
   useEffect(() => {
-    // Placeholder for fetching recommendations and trends based on content
     const fetchRecommendationsAndTrends = async () => {
-      // Simulate API call
-      const fetchedRecommendations = ["Recommendation 1", "Recommendation 2"];
-      const fetchedTrends = ["Trend 1", "Trend 2"];
-      setRecommendations(fetchedRecommendations);
-      setTrends(fetchedTrends);
+      try {
+        // Simulate API call to fetch recommendations and trends
+        const fetchedRecommendations = await getRecommendations(content);
+        const fetchedTrends = await getTrends(content);
+        setRecommendations(fetchedRecommendations);
+        setTrends(fetchedTrends);
+      } catch (error) {
+        console.error("Error fetching recommendations and trends:", error);
+      }
     };
 
     fetchRecommendationsAndTrends();
   }, [content]);
+
+  const getRecommendations = async (content) => {
+    // Simulate API call to fetch recommendations based on content
+    return ["Personalized Recommendation 1", "Personalized Recommendation 2"];
+  };
+
+  const getTrends = async (content) => {
+    // Simulate API call to fetch trends based on content
+    return ["Personalized Trend 1", "Personalized Trend 2"];
+  };
 
   const addTag = () => {
     if (newTag) {
