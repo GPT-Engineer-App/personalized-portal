@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Heading, Text, VStack, Avatar, Tag, TagLabel, Input, Button, HStack, SimpleGrid, Stat, StatLabel, StatNumber } from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
 
@@ -8,6 +8,9 @@ const Profile = () => {
   const [projects, setProjects] = useState([]);
   const [newSkill, setNewSkill] = useState("");
   const [newProject, setNewProject] = useState("");
+  const [recommendations, setRecommendations] = useState([]);
+  const [collaborators, setCollaborators] = useState([]);
+  const [projectRecommendations, setProjectRecommendations] = useState([]);
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -33,6 +36,14 @@ const Profile = () => {
       setNewProject("");
     }
   };
+
+  useEffect(() => {
+    // Fetch recommendations, collaborators, and project recommendations based on user profile
+    // This is a placeholder for the actual matching algorithm
+    setRecommendations(["User1", "User2", "User3"]);
+    setCollaborators(["Collaborator1", "Collaborator2"]);
+    setProjectRecommendations(["Project1", "Project2"]);
+  }, [skills, projects]);
 
   return (
     <Box p={4}>
@@ -98,6 +109,36 @@ const Profile = () => {
               <StatNumber>{skills.length}</StatNumber>
             </Stat>
           </SimpleGrid>
+        </Box>
+        <Box>
+          <Heading size="md">Recommendations</Heading>
+          <VStack spacing={2} mt={2} align="stretch">
+            {recommendations.map((recommendation, index) => (
+              <Box key={index} p={4} borderWidth="1px" borderRadius="md">
+                <Text>{recommendation}</Text>
+              </Box>
+            ))}
+          </VStack>
+        </Box>
+        <Box>
+          <Heading size="md">Potential Collaborators</Heading>
+          <VStack spacing={2} mt={2} align="stretch">
+            {collaborators.map((collaborator, index) => (
+              <Box key={index} p={4} borderWidth="1px" borderRadius="md">
+                <Text>{collaborator}</Text>
+              </Box>
+            ))}
+          </VStack>
+        </Box>
+        <Box>
+          <Heading size="md">Project Recommendations</Heading>
+          <VStack spacing={2} mt={2} align="stretch">
+            {projectRecommendations.map((project, index) => (
+              <Box key={index} p={4} borderWidth="1px" borderRadius="md">
+                <Text>{project}</Text>
+              </Box>
+            ))}
+          </VStack>
         </Box>
       </VStack>
     </Box>
