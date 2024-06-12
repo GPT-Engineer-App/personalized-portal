@@ -7,6 +7,8 @@ const KnowledgePortals = () => {
   const [categories, setCategories] = useState(["Programming", "Design", "Marketing", "Business"]);
   const [newCategory, setNewCategory] = useState("");
   const [expertReviews, setExpertReviews] = useState([]);
+  const [ratings, setRatings] = useState({});
+  const [reviews, setReviews] = useState({});
 
   const addContent = () => {
     if (newContent.title && newContent.category && newContent.description) {
@@ -29,6 +31,14 @@ const KnowledgePortals = () => {
     }
     updatedReviews[index].push(review);
     setExpertReviews(updatedReviews);
+  };
+
+  const handleRating = (contentIndex, rating) => {
+    setRatings({ ...ratings, [contentIndex]: rating });
+  };
+
+  const handleReview = (contentIndex, review) => {
+    setReviews({ ...reviews, [contentIndex]: review });
   };
 
   return (
@@ -86,7 +96,26 @@ const KnowledgePortals = () => {
               <Text mt={2}>Category: {item.category}</Text>
               <Text mt={2}>{item.description}</Text>
               <Text mt={2}>Rating: {item.rating}</Text>
-              <Box mt={2}>
+              <Box mt={4}>
+                <Heading size="xs">Rate this content</Heading>
+                <Input
+                  type="number"
+                  max={5}
+                  min={1}
+                  value={ratings[index] || ""}
+                  onChange={(e) => handleRating(index, e.target.value)}
+                  mt={2}
+                />
+              </Box>
+              <Box mt={4}>
+                <Heading size="xs">Leave a review</Heading>
+                <Textarea
+                  value={reviews[index] || ""}
+                  onChange={(e) => handleReview(index, e.target.value)}
+                  mt={2}
+                />
+              </Box>
+              <Box mt={4}>
                 <Heading size="xs">Expert Reviews</Heading>
                 {expertReviews[index] && expertReviews[index].map((review, reviewIndex) => (
                   <Text key={reviewIndex} mt={1}>- {review}</Text>

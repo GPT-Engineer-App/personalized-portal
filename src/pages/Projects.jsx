@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Box, Heading, VStack, Input, Button, Textarea, HStack, Tag, TagLabel } from "@chakra-ui/react";
+import { Box, Heading, VStack, Input, Button, Textarea, HStack, Tag, TagLabel, Text } from "@chakra-ui/react";
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [newProject, setNewProject] = useState({ title: "", description: "", goals: [] });
   const [newGoal, setNewGoal] = useState("");
+  const [ratings, setRatings] = useState({});
+  const [reviews, setReviews] = useState({});
 
   const addProject = () => {
     if (newProject.title && newProject.description) {
@@ -18,6 +20,14 @@ const Projects = () => {
       setNewProject({ ...newProject, goals: [...newProject.goals, newGoal] });
       setNewGoal("");
     }
+  };
+
+  const handleRating = (projectIndex, rating) => {
+    setRatings({ ...ratings, [projectIndex]: rating });
+  };
+
+  const handleReview = (projectIndex, review) => {
+    setReviews({ ...reviews, [projectIndex]: review });
   };
 
   return (
@@ -71,6 +81,25 @@ const Projects = () => {
                   <Text key={goalIndex}>- {goal}</Text>
                 ))}
               </VStack>
+              <Box mt={4}>
+                <Heading size="xs">Rate this project</Heading>
+                <Input
+                  type="number"
+                  max={5}
+                  min={1}
+                  value={ratings[index] || ""}
+                  onChange={(e) => handleRating(index, e.target.value)}
+                  mt={2}
+                />
+              </Box>
+              <Box mt={4}>
+                <Heading size="xs">Leave a review</Heading>
+                <Textarea
+                  value={reviews[index] || ""}
+                  onChange={(e) => handleReview(index, e.target.value)}
+                  mt={2}
+                />
+              </Box>
             </Box>
           ))}
         </Box>

@@ -1,6 +1,6 @@
 // Update this page (the content is just a fallback if you fail and example)
 // Use chakra-ui
-import { Container, Text, VStack } from "@chakra-ui/react";
+import { Container, Text, VStack, Box, Heading } from "@chakra-ui/react";
 
 // Example of using react-icons
 // import { FaRocket } from "react-icons/fa";
@@ -13,6 +13,10 @@ const Index = () => {
         <Text fontSize="2xl">Your Blank Canvas</Text>
         <Text>Chat with the agent to start making edits.</Text>
       </VStack>
+      <Box mt={8}>
+        <Heading size="md">Quality Indicators</Heading>
+        <Text mt={2}>Based on user feedback and ratings, the quality of content and projects is continuously monitored and displayed here.</Text>
+      </Box>
     </Container>
   );
 };

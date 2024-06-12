@@ -11,6 +11,7 @@ const Profile = () => {
   const [recommendations, setRecommendations] = useState([]);
   const [collaborators, setCollaborators] = useState([]);
   const [projectRecommendations, setProjectRecommendations] = useState([]);
+  const [endorsements, setEndorsements] = useState([]);
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -35,6 +36,10 @@ const Profile = () => {
       setProjects([...projects, newProject]);
       setNewProject("");
     }
+  };
+
+  const handleEndorsement = (endorsement) => {
+    setEndorsements([...endorsements, endorsement]);
   };
 
   useEffect(() => {
@@ -139,6 +144,21 @@ const Profile = () => {
               </Box>
             ))}
           </VStack>
+        </Box>
+        <Box>
+          <Heading size="md">Community Endorsements</Heading>
+          <VStack spacing={2} mt={2} align="stretch">
+            {endorsements.map((endorsement, index) => (
+              <Box key={index} p={4} borderWidth="1px" borderRadius="md">
+                <Text>{endorsement}</Text>
+              </Box>
+            ))}
+          </VStack>
+          <Input
+            placeholder="Add an endorsement"
+            mt={4}
+            onBlur={(e) => handleEndorsement(e.target.value)}
+          />
         </Box>
       </VStack>
     </Box>
