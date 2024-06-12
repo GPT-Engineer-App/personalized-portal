@@ -21,6 +21,9 @@ const Navbar = () => {
           <Button as={RouterLink} to="/editing" colorScheme="teal" variant="outline" mr={4}>
             Editing
           </Button>
+          <Button as={RouterLink} to="/knowledge-portals" colorScheme="teal" variant="outline" mr={4}>
+            Knowledge Portals
+          </Button>
           <Button as={RouterLink} to="/forums" colorScheme="teal" variant="outline">
             Forums
           </Button>

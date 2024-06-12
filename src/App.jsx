@@ -8,6 +8,7 @@ import Projects from "./pages/Projects.jsx";
 import TaskManagement from "./pages/TaskManagement.jsx";
 import RealTimeEditing from "./pages/RealTimeEditing.jsx";
 import DiscussionForums from "./pages/DiscussionForums.jsx";
+import KnowledgePortals from "./pages/KnowledgePortals.jsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/tasks" element={<TaskManagement />} />
         <Route exact path="/editing" element={<RealTimeEditing />} />
         <Route exact path="/forums" element={<DiscussionForums />} />
+        <Route exact path="/knowledge-portals" element={<KnowledgePortals />} />
       </Routes>
     </Router>
   );
