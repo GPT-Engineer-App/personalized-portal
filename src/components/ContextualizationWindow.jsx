@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Heading, Text, VStack, Tag, TagLabel, Input, Button, HStack } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack, Tag, TagLabel, Input, Button, HStack, Slider, SliderTrack, SliderFilledTrack, SliderThumb } from '@chakra-ui/react';
 
 const ContextualizationWindow = ({ content }) => {
   const [recommendations, setRecommendations] = useState([]);
   const [trends, setTrends] = useState([]);
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
+  const [weights, setWeights] = useState({});
 
   useEffect(() => {
     const fetchRecommendationsAndTrends = async () => {
@@ -40,6 +41,21 @@ const ContextualizationWindow = ({ content }) => {
     }
   };
 
+  const handleSliderChange = (tag, value) => {
+    setWeights({ ...weights, [tag]: value });
+    // Simulate API call to update user preferences
+    updateUserPreferences(tag, value);
+  };
+
+  const updateUserPreferences = async (tag, value) => {
+    try {
+      // Simulate API call to update user preferences in the backend
+      console.log(`Updated ${tag} weight to ${value}`);
+    } catch (error) {
+      console.error("Error updating user preferences:", error);
+    }
+  };
+
   return (
     <Box p={4} borderWidth="1px" borderRadius="md">
       <Heading size="md">Contextualization Window</Heading>
@@ -62,6 +78,18 @@ const ContextualizationWindow = ({ content }) => {
             {tags.map((tag, index) => (
               <Tag key={index} size="lg" colorScheme="teal">
                 <TagLabel>{tag}</TagLabel>
+                <Slider
+                  aria-label={`slider-${tag}`}
+                  defaultValue={weights[tag] || 0}
+                  min={0}
+                  max={100}
+                  onChange={(value) => handleSliderChange(tag, value)}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
               </Tag>
             ))}
           </HStack>
