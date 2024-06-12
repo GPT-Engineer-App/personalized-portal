@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Box, Heading, VStack, Input, Button, Textarea, HStack, Tag, TagLabel, Select, Text } from "@chakra-ui/react";
+import ContextualizationWindow from '../components/ContextualizationWindow';
 
 const KnowledgePortals = () => {
   const [content, setContent] = useState([]);
@@ -9,6 +10,7 @@ const KnowledgePortals = () => {
   const [expertReviews, setExpertReviews] = useState([]);
   const [ratings, setRatings] = useState({});
   const [reviews, setReviews] = useState({});
+  const [selectedContent, setSelectedContent] = useState(null);
 
   const addContent = () => {
     if (newContent.title && newContent.category && newContent.description) {
@@ -39,6 +41,10 @@ const KnowledgePortals = () => {
 
   const handleReview = (contentIndex, review) => {
     setReviews({ ...reviews, [contentIndex]: review });
+  };
+
+  const handleContentClick = (content) => {
+    setSelectedContent(content);
   };
 
   return (
@@ -91,7 +97,7 @@ const KnowledgePortals = () => {
         <Box>
           <Heading size="md">Submitted Content</Heading>
           {content.map((item, index) => (
-            <Box key={index} p={4} borderWidth="1px" borderRadius="md" mt={4}>
+            <Box key={index} p={4} borderWidth="1px" borderRadius="md" mt={4} onClick={() => handleContentClick(item)}>
               <Heading size="sm">{item.title}</Heading>
               <Text mt={2}>Category: {item.category}</Text>
               <Text mt={2}>{item.description}</Text>
@@ -129,6 +135,7 @@ const KnowledgePortals = () => {
             </Box>
           ))}
         </Box>
+        {selectedContent && <ContextualizationWindow content={selectedContent} />}
       </VStack>
     </Box>
   );

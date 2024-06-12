@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Box, Heading, VStack, Input, Button, Textarea, HStack, Tag, TagLabel, Text } from "@chakra-ui/react";
+import ContextualizationWindow from '../components/ContextualizationWindow';
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -7,6 +8,7 @@ const Projects = () => {
   const [newGoal, setNewGoal] = useState("");
   const [ratings, setRatings] = useState({});
   const [reviews, setReviews] = useState({});
+  const [selectedProject, setSelectedProject] = useState(null);
 
   const addProject = () => {
     if (newProject.title && newProject.description) {
@@ -28,6 +30,10 @@ const Projects = () => {
 
   const handleReview = (projectIndex, review) => {
     setReviews({ ...reviews, [projectIndex]: review });
+  };
+
+  const handleProjectClick = (project) => {
+    setSelectedProject(project);
   };
 
   return (
@@ -72,7 +78,7 @@ const Projects = () => {
         <Box>
           <Heading size="md">Existing Projects</Heading>
           {projects.map((project, index) => (
-            <Box key={index} p={4} borderWidth="1px" borderRadius="md" mt={4}>
+            <Box key={index} p={4} borderWidth="1px" borderRadius="md" mt={4} onClick={() => handleProjectClick(project)}>
               <Heading size="sm">{project.title}</Heading>
               <Text mt={2}>{project.description}</Text>
               <Heading size="xs" mt={2}>Goals</Heading>
@@ -103,6 +109,7 @@ const Projects = () => {
             </Box>
           ))}
         </Box>
+        {selectedProject && <ContextualizationWindow content={selectedProject} />}
       </VStack>
     </Box>
   );
