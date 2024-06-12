@@ -1,11 +1,17 @@
 import { useState } from "react";
-import { Box, Heading, VStack, Textarea, Button } from "@chakra-ui/react";
+import { Box, Heading, VStack, Button, Input, HStack, Text } from "@chakra-ui/react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { FaImage, FaVideo, FaLink } from "react-icons/fa";
 
 const RealTimeEditing = () => {
   const [content, setContent] = useState("");
 
-  const handleContentChange = (e) => {
-    setContent(e.target.value);
+  const [mediaUrl, setMediaUrl] = useState("");
+  const [mediaType, setMediaType] = useState("");
+
+  const handleContentChange = (value) => {
+    setContent(value);
   };
 
   const saveContent = () => {
@@ -13,15 +19,36 @@ const RealTimeEditing = () => {
     console.log("Content saved:", content);
   };
 
-  return (
+  const embedMedia = () => {
+    if (mediaUrl && mediaType) {
+      const embedTag = mediaType === "image" ? `<img src="${mediaUrl}" alt="Embedded Image" />` : `<video src="${mediaUrl}" controls></video>`;
+      setContent(content + embedTag);
+      setMediaUrl("");
+      setMediaType("");
+    }
+  };
+
+return (
     <Box p={4}>
       <VStack spacing={4} align="stretch">
         <Heading>Real-time Editing</Heading>
-        <Textarea
-          placeholder="Start typing..."
-          value={content}
-          onChange={handleContentChange}
-        />
+        <ReactQuill value={content} onChange={handleContentChange} />
+        <HStack spacing={2}>
+          <Input
+            placeholder="Media URL"
+            value={mediaUrl}
+            onChange={(e) => setMediaUrl(e.target.value)}
+          />
+          <Button onClick={() => setMediaType("image")} leftIcon={<FaImage />}>
+            Image
+          </Button>
+          <Button onClick={() => setMediaType("video")} leftIcon={<FaVideo />}>
+            Video
+          </Button>
+          <Button onClick={embedMedia} colorScheme="teal">
+            Embed
+          </Button>
+        </HStack>
         <Button onClick={saveContent} colorScheme="teal">
           Save
         </Button>
