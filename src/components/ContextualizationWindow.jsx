@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Heading, Text, VStack } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack, Tag, TagLabel, Input, Button, HStack } from '@chakra-ui/react';
 
 const ContextualizationWindow = ({ content }) => {
   const [recommendations, setRecommendations] = useState([]);
   const [trends, setTrends] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [newTag, setNewTag] = useState("");
 
   useEffect(() => {
     // Placeholder for fetching recommendations and trends based on content
@@ -17,6 +19,13 @@ const ContextualizationWindow = ({ content }) => {
 
     fetchRecommendationsAndTrends();
   }, [content]);
+
+  const addTag = () => {
+    if (newTag) {
+      setTags([...tags, newTag]);
+      setNewTag("");
+    }
+  };
 
   return (
     <Box p={4} borderWidth="1px" borderRadius="md">
@@ -33,6 +42,26 @@ const ContextualizationWindow = ({ content }) => {
           {trends.map((trend, index) => (
             <Text key={index}>{trend}</Text>
           ))}
+        </Box>
+        <Box>
+          <Heading size="sm">Tags</Heading>
+          <HStack spacing={2} mt={2}>
+            {tags.map((tag, index) => (
+              <Tag key={index} size="lg" colorScheme="teal">
+                <TagLabel>{tag}</TagLabel>
+              </Tag>
+            ))}
+          </HStack>
+          <HStack mt={4}>
+            <Input
+              placeholder="Add a new tag"
+              value={newTag}
+              onChange={(e) => setNewTag(e.target.value)}
+            />
+            <Button onClick={addTag} colorScheme="teal">
+              Add Tag
+            </Button>
+          </HStack>
         </Box>
       </VStack>
     </Box>
