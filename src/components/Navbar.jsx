@@ -30,8 +30,14 @@ const Navbar = () => {
           <Button as={RouterLink} to="/donation" colorScheme="teal" variant="outline" mr={4}>
             Donation
           </Button>
-          <Button as={RouterLink} to="/highscore-list" colorScheme="teal" variant="outline">
+          <Button as={RouterLink} to="/highscore-list" colorScheme="teal" variant="outline" mr={4}>
             Highscore List
+          </Button>
+          <Button as={RouterLink} to="/register" colorScheme="teal" variant="outline" mr={4}>
+            Register
+          </Button>
+          <Button as={RouterLink} to="/login" colorScheme="teal" variant="outline">
+            Login
           </Button>
         </Box>
       </Flex>

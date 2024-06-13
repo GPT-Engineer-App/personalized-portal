@@ -1,51 +1,12 @@
 import { useState, useEffect } from "react";
 import { Box, Heading, Text, VStack, Avatar, Tag, TagLabel, Input, Button, HStack, SimpleGrid, Stat, StatLabel, StatNumber } from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
-
-const dummyProfiles = [
-  {
-    name: "David Lindh",
-    avatar: "https://via.placeholder.com/150",
-    skills: ["JavaScript", "React", "Node.js"],
-    projects: ["Project A", "Project B"],
-    recommendations: ["User1", "User2"],
-    collaborators: ["Collaborator1", "Collaborator2"],
-    projectRecommendations: ["Project1", "Project2"],
-    endorsements: ["Endorsement1", "Endorsement2"]
-  },
-  {
-    name: "Babila Fofuleng",
-    avatar: "https://via.placeholder.com/150",
-    skills: ["Python", "Django", "Machine Learning"],
-    projects: ["Project C", "Project D"],
-    recommendations: ["User3", "User4"],
-    collaborators: ["Collaborator3", "Collaborator4"],
-    projectRecommendations: ["Project3", "Project4"],
-    endorsements: ["Endorsement3", "Endorsement4"]
-  },
-  {
-    name: "Shima Askari",
-    avatar: "https://via.placeholder.com/150",
-    skills: ["Java", "Spring", "Microservices"],
-    projects: ["Project E", "Project F"],
-    recommendations: ["User5", "User6"],
-    collaborators: ["Collaborator5", "Collaborator6"],
-    projectRecommendations: ["Project5", "Project6"],
-    endorsements: ["Endorsement5", "Endorsement6"]
-  },
-  {
-    name: "Seham Murai",
-    avatar: "https://via.placeholder.com/150",
-    skills: ["C#", ".NET", "Azure"],
-    projects: ["Project G", "Project H"],
-    recommendations: ["User7", "User8"],
-    collaborators: ["Collaborator7", "Collaborator8"],
-    projectRecommendations: ["Project7", "Project8"],
-    endorsements: ["Endorsement7", "Endorsement8"]
-  }
-];
+import { auth, db } from "../firebaseConfig";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Profile = () => {
+  const [user, setUser] = useState(null);
   const [avatar, setAvatar] = useState(null);
   const [skills, setSkills] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -55,7 +16,6 @@ const Profile = () => {
   const [collaborators, setCollaborators] = useState([]);
   const [projectRecommendations, setProjectRecommendations] = useState([]);
   const [endorsements, setEndorsements] = useState([]);
-  const [selectedProfile, setSelectedProfile] = useState(null);
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -91,37 +51,64 @@ const Profile = () => {
     }
   };
 
-  useEffect(() => {
+  const fetchUserProfile = async (uid) => {
     try {
-      if (selectedProfile !== null) {
-        const profile = dummyProfiles[selectedProfile];
-        setAvatar(profile.avatar);
-        setSkills(profile.skills);
-        setProjects(profile.projects);
-        setRecommendations(profile.recommendations);
-        setCollaborators(profile.collaborators);
-        setProjectRecommendations(profile.projectRecommendations);
-        setEndorsements(profile.endorsements);
+      const docRef = doc(db, "users", uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setAvatar(data.avatar);
+        setSkills(data.skills);
+        setProjects(data.projects);
+        setRecommendations(data.recommendations);
+        setCollaborators(data.collaborators);
+        setProjectRecommendations(data.projectRecommendations);
+        setEndorsements(data.endorsements);
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching user profile:", error);
     }
-  }, [selectedProfile]);
+  };
+
+  const saveUserProfile = async (uid) => {
+    try {
+      await setDoc(doc(db, "users", uid), {
+        avatar,
+        skills,
+        projects,
+        recommendations,
+        collaborators,
+        projectRecommendations,
+        endorsements,
+      });
+    } catch (error) {
+      console.error("Error saving user profile:", error);
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        fetchUserProfile(user.uid);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      saveUserProfile(user.uid);
+    }
+  }, [avatar, skills, projects, recommendations, collaborators, projectRecommendations, endorsements]);
 
   return (
     <Box p={4}>
       <VStack spacing={4} align="stretch">
         <Heading>Profile</Heading>
-        <Box>
-          <Heading size="md">Select Profile</Heading>
-          <HStack spacing={2} mt={2}>
-            {dummyProfiles.map((profile, index) => (
-              <Button key={index} onClick={() => setSelectedProfile(index)}>
-                {profile.name}
-              </Button>
-            ))}
-          </HStack>
-        </Box>
         <Box {...getRootProps()} border="2px dashed" p={4} textAlign="center">
           <input {...getInputProps()} />
           {avatar ? (

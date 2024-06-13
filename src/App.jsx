@@ -15,6 +15,8 @@ import DomainDefinitions from "./pages/DomainDefinitions.jsx";
 import Donation from "./pages/Donation.jsx";
 import HighscoreList from "./pages/HighscoreList.jsx";
 import ProjectDetail from "./pages/ProjectDetail.jsx";
+import Register from "./pages/Register.jsx";
+import Login from "./pages/Login.jsx";
 
 function App() {
   const [notifications, setNotifications] = useState([
@@ -44,6 +46,8 @@ function App() {
         <Route exact path="/domain-definitions" element={<DomainDefinitions />} />
         <Route exact path="/donation" element={<Donation />} />
         <Route exact path="/highscore-list" element={<HighscoreList />} />
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/login" element={<Login />} />
       </Routes>
     </Router>
   );
