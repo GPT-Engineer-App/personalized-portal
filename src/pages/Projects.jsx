@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Box, Heading, VStack, Input, Button, Textarea, HStack, Tag, TagLabel, Text } from "@chakra-ui/react";
+import { Box, Heading, VStack, Input, Button, Textarea, HStack, Tag, TagLabel, Text, Link } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -73,7 +74,11 @@ const Projects = () => {
           <Heading size="md">Existing Projects</Heading>
           {projects.map((project, index) => (
             <Box key={index} p={4} borderWidth="1px" borderRadius="md" mt={4}>
-              <Heading size="sm">{project.title}</Heading>
+              <Heading size="sm">
+                <Link as={RouterLink} to={`/projects/${index}`}>
+                  {project.title}
+                </Link>
+              </Heading>
               <Text mt={2}>{project.description}</Text>
               <Heading size="xs" mt={2}>Goals</Heading>
               <VStack spacing={1} align="stretch" mt={2}>
