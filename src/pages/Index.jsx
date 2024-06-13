@@ -1,6 +1,7 @@
 // Update this page (the content is just a fallback if you fail and example)
 // Use chakra-ui
-import { Container, Text, VStack, Box, Heading } from "@chakra-ui/react";
+import { Container, Text, VStack, Box, Heading, Button } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 
 // Example of using react-icons
 // import { FaRocket } from "react-icons/fa";
@@ -10,8 +11,11 @@ const Index = () => {
   return (
     <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <VStack spacing={4}>
-        <Text fontSize="2xl">Your Blank Canvas</Text>
-        <Text>Chat with the agent to start making edits.</Text>
+        <Heading as="h1" size="2xl">Welcome to Faving</Heading>
+        <Text fontSize="lg">Enhance Community Engagement, Discover Projects, and Contribute to a Better Future.</Text>
+        <Button as={RouterLink} to="/projects" colorScheme="teal" size="lg">
+          Explore Projects
+        </Button>
       </VStack>
       <Box mt={8}>
         <Heading size="md">Quality Indicators</Heading>
