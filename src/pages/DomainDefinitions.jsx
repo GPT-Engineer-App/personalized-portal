@@ -11,6 +11,7 @@ const DomainDefinitions = () => (
         <Text><strong>Core Functions:</strong></Text>
         <Text>- <strong>Security:</strong> Implementing protocols to protect data and user interactions.</Text>
         <Text>- <strong>Identity Management:</strong> Verifying user credentials and maintaining trust scores.</Text>
+        <Text>- <strong>Representation:</strong> Providing representation based on the usability of publicly shared data.</Text>
         <Text><strong>Impact:</strong> Central to the platform as it underpins all interactions, ensuring a secure environment for users.</Text>
       </Box>
 
