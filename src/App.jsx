@@ -11,6 +11,7 @@ import TaskManagement from "./pages/TaskManagement.jsx";
 import RealTimeEditing from "./pages/RealTimeEditing.jsx";
 import DiscussionForums from "./pages/DiscussionForums.jsx";
 import KnowledgePortals from "./pages/KnowledgePortals.jsx";
+import DomainDefinitions from "./pages/DomainDefinitions.jsx";
 
 function App() {
   const [notifications, setNotifications] = useState([
@@ -31,6 +32,7 @@ function App() {
         <Route exact path="/editing" element={<RealTimeEditing />} />
         <Route exact path="/forums" element={<DiscussionForums />} />
         <Route exact path="/knowledge-portals" element={<KnowledgePortals />} />
+        <Route exact path="/domain-definitions" element={<DomainDefinitions />} />
       </Routes>
     </Router>
   );
